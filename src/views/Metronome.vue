@@ -1,79 +1,51 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { getSongs } from '../data.js'
+import { Metronome } from '../metronome.js'
 
-let audioBuffer;
-let audioContext;
-let nextNoteTime = 0;
-let currentSong = 0;
 const songList = getSongs(useRoute().params.band);
 const songListLength = songList.length;
-const currentName = ref(songList[currentSong][0]);
-const currentTempo = ref(songList[currentSong][1]);
+const currentSong = ref(0);
+const currentName = ref(songList[currentSong.value][0]);
+const currentTempo = ref(songList[currentSong.value][1]);
 const isPlaying = ref(false);
-const scheduleAheadTime = 0.1;
-const timerWorker = new Worker('/worker.js');
+const metronome = new Metronome(currentTempo);
 
-function schedule() {
-    while (nextNoteTime < audioContext.currentTime + scheduleAheadTime) {
-        play(audioBuffer, nextNoteTime);
-        nextNoteTime += (60 / currentTempo.value);
-    }
-}
-
-async function initAudio() {
-    if (!audioContext)
-        audioContext = new window.AudioContext();
-    if (!audioBuffer)
-        audioBuffer = await fetch('/sounds/b.mp3')
-            .then(res => res.arrayBuffer())
-            .then(buffer => audioContext.decodeAudioData(buffer));
-    play(audioContext.createBuffer(1, 1, 22050));
-}
-
-function play(buffer, when = 0) {
-    let node = new AudioBufferSourceNode(audioContext, { 'buffer': buffer });
-    node.connect(audioContext.destination);
-    node.start(when);
-}
+onBeforeUnmount(() => metronome.terminate())
 
 function start() {
-    initAudio();
-    nextNoteTime = audioContext.currentTime;
-    timerWorker.postMessage('play');
+    metronome.start();
     isPlaying.value = true;
 }
 
 function stop() {
-    timerWorker.postMessage('stop');
+    metronome.stop();
     isPlaying.value = false;
 }
 
 function loadSong() {
-    [currentName.value, currentTempo.value] = songList[currentSong];
+    [currentName.value, currentTempo.value] = songList[currentSong.value];
 }
 
 function setSong(index) {
-    currentSong = index;
+    currentSong.value = index;
     loadSong();
 }
 
 function next() {
-    currentSong++;
-    if (currentSong === songListLength)
-        currentSong = 0;
+    currentSong.value++;
+    if (currentSong.value === songListLength)
+        currentSong.value = 0;
     loadSong();
 }
 
 function prev() {
-    currentSong--;
-    if (currentSong === -1)
-        currentSong = songListLength - 1;
+    currentSong.value--;
+    if (currentSong.value === -1)
+        currentSong.value = songListLength - 1;
     loadSong();
 }
-
-timerWorker.onmessage = () => schedule();
 
 </script>
 
@@ -82,8 +54,8 @@ timerWorker.onmessage = () => schedule();
         <span class="btn-group">
             <button class="prev" @click="prev();"><i class="fa fa-step-backward"></i></button>
             <button class="next" @click="next();"><i class="fa fa-step-forward"></i></button>
-            <button class="playStop stop" v-show="isPlaying" @click="stop();"><i class="fa fa-stop"></i></button>
-            <button class="playStop play" v-show="!isPlaying" @click="start();"><i class="fa fa-play"></i></button>
+            <button class="playStop stop" v-show="isPlaying" @click=" stop();"><i class="fa fa-stop"></i></button>
+            <button class="playStop play" v-show="!isPlaying" @click=" start();"><i class="fa fa-play"></i></button>
         </span>
         <table id="headerTable">
             <tr>
@@ -102,6 +74,10 @@ timerWorker.onmessage = () => schedule();
     </table>
 </template>
 <style scoped>
+#headerTable {
+    background-color: black;
+}
+
 #headerTable td {
     font-size: 2em;
     font-weight: bold;
@@ -111,7 +87,12 @@ timerWorker.onmessage = () => schedule();
     padding-bottom: 0.6em;
 }
 
+#listTable {
+    background-color: #11191f;
+}
+
 #listTable td {
+    color: azure;
     font-size: 1.8em;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
@@ -160,7 +141,7 @@ table {
 
 .sticky {
     position: sticky;
-    top: 0;
     background-color: black;
+    top: 0;
 }
 </style>

@@ -1,6 +1,6 @@
 const data = [
     [
-        'NoEsMosCada',
+        'Noesmoscada',
         [
             ['Verte Así', 140],
             ['Que se yo qué hacer', 140],
@@ -13,11 +13,17 @@ const data = [
         ]
     ],
     [
+        'Peregrinos',
+        [
+            ['Es el Amor', 110]
+        ]
+    ],
+    [
         'Perros de la Noche',
         [
             ['Como un Lobo', 130],
             ['Farmacia', 130],
-            ['Dame', 180],
+            ['Me Muero', 125],
             ['Todavia', 110],
             ['Pasan las horas', 122],
             ['Tan Distintos', 120],
@@ -26,14 +32,8 @@ const data = [
             ['Hay Momentos', 94],
             ['Espejo Roto', 129],
             ['100 Años', 139],
-            ['Me Muero', 125],
+            ['Dame', 180],
             ['Gracias', 138]
-        ]
-    ],
-    [
-        'Peregrinos',
-        [
-            ['Es el Amor', 110]
         ]
     ]
 ]
