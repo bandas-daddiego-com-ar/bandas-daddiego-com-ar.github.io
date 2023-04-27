@@ -4,22 +4,27 @@ import { getBands } from '../data.js'
 </script>
 
 <template>
-  <br>
-  <hr>
   <div>
-    <br>
-    <hr>
-    <br>
-      <h1 v-for="(band, id) in getBands()">
-        <RouterLink :to="`/${id}`">{{ band }}</RouterLink>
-      </h1>
-      <hr>
+    <RouterLink v-for="(band, id) in getBands()" :to="`/${id}`" custom v-slot="{ navigate }">
+      <button @click="navigate" @keypress.enter="navigate">
+        {{ band }}
+      </button>
+    </RouterLink>
   </div>
-  <br>
-  <hr>
 </template>
 <style scoped>
 div {
+  margin: 10vh 5vw;
+}
+button {
+  margin: 10vh 0;
+  background-color: #11191f;
+  border-color: #1d2e3b;
+  border-width: 3px;
+  border-radius: 15px;
+  font-size: 5vh;
+  min-height: 15vh;
   text-align: center;
+  color: #d9d9d9;
 }
 </style>

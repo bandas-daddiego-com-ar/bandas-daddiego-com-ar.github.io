@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Main from '../views/Main.vue'
-import Metronome from '../views/Metronome.vue'
+import SongList from '../views/SongList.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -11,9 +11,9 @@ const router = createRouter({
       component: Main
     },
     {
-      path: '/:band',
-      name: 'metronome',
-      component: Metronome
+      path: '/:songListIndex',
+      name: 'songlist',
+      component: SongList
     }
   ]
 })

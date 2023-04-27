@@ -4,12 +4,12 @@ import { useRoute } from 'vue-router'
 import { getSongs } from '../data.js'
 import { Metronome } from '../metronome.js'
 
-const songList = getSongs(useRoute().params.band);
-const songListLength = songList.length;
+const songs = getSongs(useRoute().params.songListIndex);
+const songsLen = songs.length;
 const currentSong = ref(0);
-const currentName = ref(songList[currentSong.value][0]);
-const currentTempo = ref(songList[currentSong.value][1]);
 const isPlaying = ref(false);
+const currentName = ref(songs[0][0]);
+const currentTempo = ref(songs[0][1]);
 const metronome = new Metronome(currentTempo);
 
 onBeforeUnmount(() => metronome.terminate())
@@ -25,7 +25,7 @@ function stop() {
 }
 
 function loadSong() {
-    [currentName.value, currentTempo.value] = songList[currentSong.value];
+    [currentName.value, currentTempo.value] = songs[currentSong.value];
 }
 
 function setSong(index) {
@@ -35,7 +35,7 @@ function setSong(index) {
 
 function next() {
     currentSong.value++;
-    if (currentSong.value === songListLength)
+    if (currentSong.value === songsLen)
         currentSong.value = 0;
     loadSong();
 }
@@ -43,10 +43,9 @@ function next() {
 function prev() {
     currentSong.value--;
     if (currentSong.value === -1)
-        currentSong.value = songListLength - 1;
+        currentSong.value = songsLen - 1;
     loadSong();
 }
-
 </script>
 
 <template>
@@ -59,14 +58,14 @@ function prev() {
         </span>
         <table id="headerTable">
             <tr>
-                <td style="width: 25%">{{ currentSong + 1 }}-{{ songListLength }}</td>
+                <td style="width: 25%">{{ currentSong + 1 }}∙{{ songsLen }}</td>
                 <td style="width: 55%">{{ currentName }}</td>
                 <td style="width: 20%">{{ currentTempo }}</td>
             </tr>
         </table>
     </div>
     <table id="listTable">
-        <tr v-for="(song, index) in songList" @click="setSong(index)">
+        <tr v-for="(song, index) in songs" @click="setSong(index)">
             <td>{{ index + 1 }}</td>
             <td>{{ song[0] }}</td>
             <td>{{ song[1] }}</td>
@@ -79,9 +78,9 @@ function prev() {
 }
 
 #headerTable td {
-    font-size: 2em;
+    font-size: 1.7em;
     font-weight: bold;
-    color: white;
+    color: #d9d9d9;
     text-align: center;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
@@ -92,8 +91,8 @@ function prev() {
 }
 
 #listTable td {
-    color: azure;
-    font-size: 1.8em;
+    color: #d9d9d9;
+    font-size: 1.5em;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
 }
@@ -109,6 +108,9 @@ button {
     float: left !important;
     font-size: 3em;
     border-radius: 0.3em;
+    color: #d9d9d9;
+    background-color: #11191f;
+    border-color: #1d2e3b;
 }
 
 .prev {
@@ -140,6 +142,7 @@ table {
 }
 
 .sticky {
+    padding-top: 1vh;
     position: sticky;
     background-color: black;
     top: 0;
