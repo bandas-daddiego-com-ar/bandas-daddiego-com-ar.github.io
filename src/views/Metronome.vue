@@ -1,14 +1,14 @@
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
-import Metronome from '../metronome.js'
+import { ref, onBeforeUnmount } from 'vue';
+import Metronome from '../metronome.js';
 
 const isPlaying = ref(false);
-const currentTempo = ref(120)
+const currentTempo = ref(120);
 const metronome = new Metronome(currentTempo);
-let avgTap = currentTempo.value;
+let avgTap = 120;
 let prevTapTime = 0;
 
-onBeforeUnmount(() => metronome.terminate())
+onBeforeUnmount(() => metronome.terminate());
 
 function start() {
   metronome.start();
@@ -20,29 +20,37 @@ function stop() {
   isPlaying.value = false;
 }
 
-function tap(){
-    const now = Date.now() / 1000;
-    if (now - prevTapTime > 2) {
-        prevTapTime = now;
-        avgTap = 0;
-        return;
-    }
-    avgTap = (avgTap + (60 / (now - prevTapTime))) / 2;
+function tap() {
+  const now = Date.now();
+  if (now - prevTapTime > 2000) {
     prevTapTime = now;
-    setTempo(avgTap);
+    avgTap = 0;
+    return;
+  }
+  avgTap = (avgTap + now - prevTapTime) / 2;
+  prevTapTime = now;
+  setTempo(60000 / avgTap);
 }
 
-function setTempo(tempo){
+function setTempo(tempo) {
   currentTempo.value = metronome.normalizeTempo(tempo);
 }
 </script>
 <template>
+  <br />
+  <hr />
+  <h1>Metrónomo</h1>
+  <hr />
   <main>
-    <input class="big" min="50" max="250" type="number"
-      v-model="currentTempo" @focusout="setTempo($event.target.value)">
-    <button class="big tap" @click="tap()">
-      TAP
-    </button>
+    <input
+      class="big"
+      min="50"
+      max="250"
+      type="number"
+      v-model="currentTempo"
+      @focusout="setTempo($event.target.value)"
+    />
+    <button class="big tap" @click="tap()">TAP</button>
     <button class="big stop" v-show="isPlaying" @click="stop()">
       <i class="fa fa-stop"></i>
     </button>
@@ -52,6 +60,12 @@ function setTempo(tempo){
   </main>
 </template>
 <style scoped>
+h1 {
+  margin: 0;
+  font-size: 3em;
+  color: #d9d9d9;
+  text-align: center;
+}
 .big {
   font-size: 3em;
   border-radius: 0.3em;

@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
-import { useRoute } from 'vue-router'
-import { getSongs } from '../data.js'
-import Metronome from '../metronome.js'
+import { ref, onBeforeUnmount } from 'vue';
+import { useRoute } from 'vue-router';
+import { getSongs } from '../data.js';
+import Metronome from '../metronome.js';
 
 const songs = getSongs(useRoute().params.songListIndex);
 const songsLen = songs.length;
@@ -12,7 +12,7 @@ const currentName = ref(songs[0][0]);
 const currentTempo = ref(songs[0][1]);
 const metronome = new Metronome(currentTempo);
 
-onBeforeUnmount(() => metronome.terminate())
+onBeforeUnmount(() => metronome.terminate());
 
 function start() {
   metronome.start();
@@ -35,15 +35,13 @@ function setSong(index) {
 
 function next() {
   currentSong.value++;
-  if (currentSong.value === songsLen)
-    currentSong.value = 0;
+  if (currentSong.value === songsLen) currentSong.value = 0;
   loadSong();
 }
 
 function prev() {
   currentSong.value--;
-  if (currentSong.value === -1)
-    currentSong.value = songsLen - 1;
+  if (currentSong.value === -1) currentSong.value = songsLen - 1;
   loadSong();
 }
 </script>
@@ -51,10 +49,14 @@ function prev() {
 <template>
   <div class="sticky">
     <span class="btn-group">
-      <button class="prev" @click="prev();"><i class="fa fa-step-backward"></i></button>
-      <button class="next" @click="next();"><i class="fa fa-step-forward"></i></button>
-      <button class="playStop stop" v-show="isPlaying" @click=" stop(); "><i class="fa fa-stop"></i></button>
-      <button class="playStop play" v-show="!isPlaying" @click="start();"><i class="fa fa-play"></i></button>
+      <button class="prev" @click="prev()"><i class="fa fa-step-backward"></i></button>
+      <button class="next" @click="next()"><i class="fa fa-step-forward"></i></button>
+      <button class="playStop stop" v-show="isPlaying" @click="stop()">
+        <i class="fa fa-stop"></i>
+      </button>
+      <button class="playStop play" v-show="!isPlaying" @click="start()">
+        <i class="fa fa-play"></i>
+      </button>
     </span>
     <table id="headerTable">
       <tr>
@@ -98,7 +100,7 @@ function prev() {
 }
 
 .btn-group:after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
