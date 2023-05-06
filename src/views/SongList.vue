@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import { getSongs } from '../data.js';
 import Metronome from '../metronome.js';
 
-const songs = getSongs(useRoute().params.songListIndex);
+const songs = getSongs(useRoute().params.listIndex);
 const songsLen = songs.length;
 const currentSong = ref(0);
 const isPlaying = ref(false);

@@ -12,7 +12,7 @@ const router = createRouter({
       component: Main,
     },
     {
-      path: '/:songListIndex',
+      path: '/list/:listIndex',
       name: 'songlist',
       component: SongList,
     },

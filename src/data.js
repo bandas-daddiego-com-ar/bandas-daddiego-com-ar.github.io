@@ -37,11 +37,11 @@ export function getSongs(index) {
   return data[index][1];
 }
 
-export function getBands() {
+export function getSongLists() {
   return data.map((item) => item[0]);
 }
 
 export default {
   getSongs,
-  getBands,
+  getSongLists,
 };

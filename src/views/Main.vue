@@ -1,17 +1,18 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import { getBands } from '../data.js';
+import { getSongLists } from '../data.js';
 </script>
 
 <template>
   <div>
+    <hr />
     <RouterLink to="/metronome" custom v-slot="{ navigate }">
       <button @click="navigate" @keypress.enter="navigate">Metrónomo</button>
     </RouterLink>
     <hr />
     <h1>Listas</h1>
     <hr class="hrshort" />
-    <RouterLink v-for="(band, id) in getBands()" :to="`/${id}`" custom v-slot="{ navigate }">
+    <RouterLink v-for="(band, id) in getSongLists()" :to="`/list/${id}`" custom v-slot="{ navigate }">
       <button @click="navigate" @keypress.enter="navigate">
         {{ band }}
       </button>

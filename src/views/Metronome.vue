@@ -42,6 +42,7 @@ function setTempo(tempo) {
   <h1>Metrónomo</h1>
   <hr />
   <main>
+    <button class="big tap" @click="tap()">TAP</button>
     <input
       class="big"
       min="50"
@@ -50,7 +51,6 @@ function setTempo(tempo) {
       v-model="currentTempo"
       @focusout="setTempo($event.target.value)"
     />
-    <button class="big tap" @click="tap()">TAP</button>
     <button class="big stop" v-show="isPlaying" @click="stop()">
       <i class="fa fa-stop"></i>
     </button>
@@ -82,5 +82,8 @@ input {
 }
 .stop {
   background-color: #b22222 !important;
+}
+.tap {
+  background-color: darkcyan;
 }
 </style>
