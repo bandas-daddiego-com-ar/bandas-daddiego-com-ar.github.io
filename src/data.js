@@ -12,7 +12,30 @@ const data = [
       ['Sabor a danza', 150],
     ],
   ],
-  ['Peregrinos', [['Es el Amor', 110]]],
+  [
+    'Peregrinos',
+    [
+      ['Las trémulas canciones', 115],
+      ['Ella dijo', 85],
+      ['Melancolía', 134],
+      ['Un show', 122],
+      ['Rimbaud', 140],
+      ['Alas rotas', 125],
+      ['Mariposas', 100],
+      ['Mar del plata', 130],
+      ['América', 100],
+      ['Luxemburgués', 130],
+      ['Las vías del tren', 146],
+      ['Eléctricos duendes', 162],
+      ['De la hoya', 143],
+      ['Doce chicharras', 133],
+      ['Cristal', 143],
+      ['Pronta entrega', 102],
+      ['Es el amor', 120],
+      ['El corazón sobre todo', 135],
+      ['Aire', 135],
+    ]
+  ],
   [
     'Perros de la Noche',
     [
