@@ -2,7 +2,7 @@ const data = [
   [
     'Noesmoscada',
     [
-      ["El Error", 122],
+      ["El Error", 125],
       ["Ciclotimia", 134],
       ["A Las Nueve", 130],
       ["Verte Así", 140],
@@ -13,7 +13,7 @@ const data = [
       ["Cero A La Izquierda", 142],
       ["En El Último Bar", 120],
       ["Que Se Yo Que Hacer", 140],
-      ["Tira Para Arriba", ],
+      ["Tira Para Arriba", 130],
       ["Pampa - Ramon", 156],
       ["Bailando Al Cielo", 150],
       ["Sabor A Danza", 150]
@@ -47,16 +47,15 @@ const data = [
     'Perros de la Noche',
     [
       ['Down', 128],
-      ['Tan Distintos', 120],
       ['100 Años', 139],
-      ['Todavia', 110],
+      ['Tan Distintos', 120],
       ['Pasan las horas', 122],
       ['Hay Momentos', 94],
       ['Espejo Roto', 129],
       ['Infierno Blanco', 115],
       ['Como un Lobo', 130],
-      ['Me Muero', 125],
       ['Farmacia', 130],
+      ['Me Muero', 130],
       ['Gracias', 138],
       ['Reyes de la Noche', 140],
     ],
